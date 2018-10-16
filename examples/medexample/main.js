@@ -3,10 +3,10 @@ console.log(template); // eslint-disable-line
 localStorage.debug = ""; // 'template'
 
 // Create sigma graphs _________
-const rps = createSigma("rps");
+// const rps = createSigma("rps");
 const overlay = createSigma("overlay");
 // Creating peers and sigma nodes
-const max = 3;
+const max = 30;
 const peers = [];
 for (let i = 0; i < max; i++) {
   const fogletTemplate = new template(undefined, true);
@@ -16,16 +16,16 @@ for (let i = 0; i < max; i++) {
     color: randomColor(),
     index: i
   };
-  addTemplateToGraph(rps, fogletTemplate, options);
+  // addTemplateToGraph(rps, fogletTemplate, options);
   addTemplateToGraph(overlay, fogletTemplate, options);
   // Adding listeners
   const fgId = fogletTemplate.foglet.inViewID;
-  fogletTemplate.on("rps-open", id => addEdge(rps, fgId, id));
+  // fogletTemplate.on("rps-open", id => addEdge(rps, fgId, id));
   fogletTemplate.on("overlay-open", id => addEdge(overlay, fgId, id));
-  fogletTemplate.on("rps-close", id => dropEdge(rps, `${fgId}-${id}`));
+  // fogletTemplate.on("rps-close", id => dropEdge(rps, `${fgId}-${id}`));
   fogletTemplate.on("overlay-close", id => dropEdge(overlay, `${fgId}-${id}`));
   fogletTemplate.on("descriptor-updated", ({ id, descriptor }) => {
-    updateNode(rps, id, descriptor);
+   // updateNode(rps, id, descriptor);
     updateNode(overlay, id, descriptor);
   });
 }
@@ -39,10 +39,10 @@ forEachAsync(peers, (peer, index) => {
   const randomPeer = peers[rn];
   return peer.connection(randomPeer);
 }).then(() => {
-  rps.refresh();
+  // rps.refresh();
   overlay.refresh();
   // Set broadcast listeners
   setListeners();
   // Firing change location loop
-  updateLocation(peers);
+  // updateLocation(peers);
 });
